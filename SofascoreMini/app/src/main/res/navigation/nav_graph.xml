@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainListFragment">
+
+    <fragment
+        android:id="@+id/mainListFragment"
+        android:name="com.sofascoremini.ui.main.MainListFragment"
+        android:label="" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.sofascoremini.ui.settings.SettingsFragment"
+        android:label="Settings" />
+</navigation>

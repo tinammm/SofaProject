@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">SofascoreMini</string>
+    <string name="theme">Theme</string>
+    <string name="light_theme">Light</string>
+    <string name="dark_theme">Dark</string>
+    <string name="day_first">DD / MM / YYYY</string>
+    <string name="month_first">MM / DD / YYYY</string>
+    <string name="about">About</string>
+    <string name="sofascore_android_academy">Sofascore Android Academy</string>
+    <string name="year">Class 2024</string>
+    <string name="app_name_title">App Name</string>
+    <string name="mini_sofascore_app">Mini Sofascore App</string>
+    <string name="sofascore">Sofascore</string>
+    <string name="api_credit">API Credit</string>
+    <string name="developer">Developer</string>
+    <string name="developer_name">Tina Mustapić</string>
+    <string name="app_logo">App logo</string>
+    <string name="date_format">Date Format</string>
+</resources>
