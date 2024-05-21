@@ -8,7 +8,6 @@ import kotlinx.coroutines.withContext
 
 class Repository {
     private val api = Network.getInstance()
-
     suspend fun getEventsForSportsAndDate(slug: String, date: String) =
         withContext(Dispatchers.IO) {
             safeResponse {
