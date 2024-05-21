@@ -16,4 +16,9 @@
     <string name="developer_name">Tina Mustapić</string>
     <string name="app_logo">App logo</string>
     <string name="date_format">Date Format</string>
+    <string name="football">Football</string>
+    <string name="basketball">Basketball</string>
+    <string name="am_football">Am. Football</string>
+    <string name="pointer_right">pointer right</string>
+    <string name="d_events">%d Events</string>
 </resources>
