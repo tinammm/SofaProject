@@ -12,11 +12,9 @@ import com.sofascoremini.data.models.Score
 import com.sofascoremini.data.models.Status
 import com.sofascoremini.data.models.Team
 import com.sofascoremini.data.models.Tournament
-import com.sofascoremini.data.models.WinnerCode
 import kotlinx.coroutines.launch
 import com.sofascoremini.data.remote.Result
 import com.sofascoremini.util.offsetToDate
-import com.sofascoremini.util.offsetToDateHeader
 
 class MainListViewModel : ViewModel() {
 

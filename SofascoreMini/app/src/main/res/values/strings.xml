@@ -21,4 +21,7 @@
     <string name="am_football">Am. Football</string>
     <string name="pointer_right">pointer right</string>
     <string name="d_events">%d Events</string>
+    <string name="tournament_logo">tournament_logo</string>
+    <string name="away_team_logo">away team logo</string>
+    <string name="home_team_logo">home team logo</string>
 </resources>
