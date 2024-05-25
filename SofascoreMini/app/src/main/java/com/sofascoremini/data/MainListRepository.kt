@@ -6,7 +6,7 @@ import com.sofascoremini.util.safeResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class Repository {
+object MainListRepository {
     private val api = Network.getInstance()
     suspend fun getEventsForSportsAndDate(slug: String, date: String) =
         withContext(Dispatchers.IO) {

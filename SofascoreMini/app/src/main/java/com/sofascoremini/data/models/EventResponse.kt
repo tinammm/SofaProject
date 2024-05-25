@@ -1,6 +1,7 @@
 package com.sofascoremini.data.models
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class EventResponse(
     val id: Int,
@@ -12,7 +13,7 @@ data class EventResponse(
     val homeScore: Score,
     val awayScore: Score,
     val winnerCode: WinnerCode?
-)
+) : Serializable
 
 enum class Status(val status: String) {
     @SerializedName("finished")

@@ -2,6 +2,7 @@ package com.sofascoremini.util
 
 import android.content.Context
 import android.util.TypedValue
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import java.text.SimpleDateFormat
@@ -62,4 +63,8 @@ fun offsetToDateHeader(offset: Int): String {
 
         "$dayOfWeek, $date"
     }
+}
+
+fun setTextColor(color: Int, vararg views: TextView) {
+    views.forEach { it.setTextColor(color) }
 }

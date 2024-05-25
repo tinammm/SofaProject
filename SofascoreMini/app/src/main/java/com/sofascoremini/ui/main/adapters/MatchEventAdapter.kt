@@ -50,9 +50,7 @@ class MatchEventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 MatchCellItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             )
 
-            else -> {
-                throw IllegalArgumentException("Invalid view type")
-            }
+            else -> throw IllegalArgumentException("Invalid view type")
         }
 
 
@@ -75,76 +73,36 @@ class MatchEventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             binding.startTime.text = extractHourMinute(eventItem.event.startDate.toString())
             binding.homeTeamName.text = eventItem.event.homeTeam.name
-            Glide.with(binding.root.context)
-                .load("https://academy-backend.sofascore.dev/team/${eventItem.event.homeTeam.id}/image")
-                .placeholder(R.drawable.loading_spinner)
-                .into(binding.homeTeamLogo)
+            binding.homeTeamLogo.apply {
+                loadImage("https://academy-backend.sofascore.dev/team/${eventItem.event.homeTeam.id}/image")
+            }
             binding.awayTeamName.text = eventItem.event.awayTeam.name
-            Glide.with(binding.root.context)
-                .load("https://academy-backend.sofascore.dev/team/${eventItem.event.awayTeam.id}/image")
-                .placeholder(R.drawable.loading_spinner)
-                .into(binding.awayTeamLogo)
-            binding.scoreHomeTeam.text = if (eventItem.event.homeScore.total != null) {
-                eventItem.event.homeScore.total.toString()
-            } else ""
-
-            binding.scoreAwayTeam.text = if (eventItem.event.awayScore.total != null) {
-                eventItem.event.awayScore.total.toString()
-            } else ""
+            binding.awayTeamLogo.apply {
+                loadImage("https://academy-backend.sofascore.dev/team/${eventItem.event.awayTeam.id}/image")
+            }
+            binding.scoreHomeTeam.text = eventItem.event.homeScore.total?.toString().orEmpty()
+            binding.scoreAwayTeam.text = eventItem.event.awayScore.total?.toString().orEmpty()
 
             when (eventItem.event.status) {
                 Status.FINISHED -> {
                     binding.status.text = "FT"
                     val color = getColorFromAttribute(binding.root.context, R.attr.n_lv_2)
                     when (eventItem.event.winnerCode) {
-                        WinnerCode.HOME -> {
-                            binding.scoreAwayTeam.setTextColor(color)
-                            binding.awayTeamName.setTextColor(color)
-                        }
-
-                        WinnerCode.AWAY -> {
-                            binding.scoreHomeTeam.setTextColor(color)
-                            binding.homeTeamName.setTextColor(color)
-                        }
-
-                        else -> {
-                            binding.scoreHomeTeam.setTextColor(color)
-                            binding.homeTeamName.setTextColor(color)
-                            binding.scoreAwayTeam.setTextColor(color)
-                            binding.awayTeamName.setTextColor(color)
-                        }
+                        WinnerCode.HOME -> setTextColor(color, binding.scoreAwayTeam, binding.awayTeamName)
+                        WinnerCode.AWAY -> setTextColor(color, binding.scoreHomeTeam, binding.homeTeamName)
+                        else -> setTextColor(color, binding.scoreHomeTeam, binding.homeTeamName, binding.scoreAwayTeam, binding.awayTeamName)
                     }
                 }
 
-                Status.NOT_STARTED -> {
-                    binding.status.text = "-"
-                }
+                Status.NOT_STARTED -> binding.status.text = "-"
 
                 Status.IN_PROGRESS -> {
                     binding.status.let {
-                        it.text = calculateMinutesPassed(
-                            eventItem.event.startDate.toString()
-                        )
-                        it.setTextColor(
-                            getColorFromAttribute(
-                                binding.root.context,
-                                R.attr.colorTertiary
-                            )
-                        )
+                        it.text = calculateMinutesPassed(eventItem.event.startDate.toString())
+                        it.setTextColor(getColorFromAttribute(binding.root.context, R.attr.colorTertiary))
                     }
-
-                    binding.scoreHomeTeam.setTextColor(
-                        getColorFromAttribute(
-                            binding.root.context,
-                            R.attr.colorTertiary
-                        )
-                    )
-                    binding.scoreAwayTeam.setTextColor(
-                        getColorFromAttribute(
-                            binding.root.context,
-                            R.attr.colorTertiary
-                        )
-                    )
+                    binding.scoreHomeTeam.setTextColor(getColorFromAttribute(binding.root.context, R.attr.colorTertiary))
+                    binding.scoreAwayTeam.setTextColor(getColorFromAttribute(binding.root.context, R.attr.colorTertiary))
                 }
             }
         }
@@ -154,12 +112,13 @@ class MatchEventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     class HeaderItemViewHolder(val binding: TournamentHeaderItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(header: MatchEventItem.Header) {
-            binding.tournamentCountry.text = header.tournament.country.name
-            binding.tournamentName.text = header.tournament.name
-            Glide.with(binding.root.context)
-                .load("https://academy-backend.sofascore.dev/tournament/${header.tournament.id}/image")
-                .placeholder(R.drawable.loading_spinner)
-                .into(binding.tournamentLogo)
+            binding.apply {
+                tournamentCountry.text = header.tournament.country.name
+                tournamentName.text = header.tournament.name
+                tournamentLogo.apply {
+                    loadImage("https://academy-backend.sofascore.dev/tournament/${header.tournament.id}/image")
+                }
+            }
         }
     }
 
