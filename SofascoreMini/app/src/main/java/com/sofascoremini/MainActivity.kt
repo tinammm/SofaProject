@@ -8,15 +8,19 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import com.sofascoremini.databinding.ActivityMainBinding
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.sofascoremini.databinding.ActivityMainBinding
 import com.sofascoremini.ui.settings.THEME
+import com.sofascoremini.util.getColorFromAttribute
+import com.sofascoremini.util.loadImage
 import com.sofascoremini.util.setUpAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -45,13 +49,61 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.settingsFragment -> {
-                    binding.appLogo.visibility = View.GONE
-                    binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+                    setUpAppBar(logoVisibility = false, hasNavIcon = true)
                 }
 
-                else -> {
-                    binding.appLogo.visibility = View.VISIBLE
-                    binding.toolbar.navigationIcon = null
+                R.id.tournamentDetailsFragment -> {
+                    setUpAppBar(
+                        logoVisibility = false, hasNavIcon = true
+                    )
+                }
+
+                R.id.eventDetailsFragment -> {
+                    setUpAppBar(
+                        logoVisibility = false,
+                        hasNavIcon = true,
+                        navTint = R.attr.n_lv_1,
+                        backgroundColor = R.attr.surface1,
+                    )
+                }
+
+                R.id.mainListFragment -> {
+                    setUpAppBar(
+                        logoVisibility = true,
+                        hasNavIcon = false,
+                        backgroundColor = R.attr.colorPrimary
+                    )
+                }
+            }
+        }
+    }
+
+    fun setUpAppBar(
+        logoVisibility: Boolean,
+        hasNavIcon: Boolean,
+        navIcon: Int = R.drawable.ic_arrow_back,
+        navTint: Int = R.attr.surface1,
+        backgroundColor: Int = R.attr.colorPrimary,
+        hasEventLabel: Boolean = false,
+        label: String = "",
+        labelImageUrl: String = ""
+    ) {
+
+        binding.apply {
+            appLogo.visibility = if (logoVisibility) View.VISIBLE else View.GONE
+            eventDetailsLabel.visibility = View.GONE
+            toolbar.apply {
+                if (hasNavIcon) {
+                    setNavigationIcon(navIcon)
+                    setNavigationIconTint(getColorFromAttribute(root.context, navTint))
+                }
+                setBackgroundColor(getColorFromAttribute(root.context, backgroundColor))
+            }
+            if (hasEventLabel) {
+                eventDetailsLabel.visibility = View.VISIBLE
+                tournamentInfo.text = label
+                tournamentLogo.apply {
+                    loadImage(labelImageUrl)
                 }
             }
         }
@@ -69,9 +121,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.action_tournament -> {
-                true
-            }
 
             R.id.action_settings -> {
                 navController.navigate(R.id.settingsFragment)

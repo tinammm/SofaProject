@@ -2,7 +2,10 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.kotlinAndroid)
+    alias(libs.plugins.androidHilt)
+    id("androidx.navigation.safeargs")
     id("kotlin-kapt")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -47,6 +50,9 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    hilt {
+        enableAggregatingTask = false
+    }
 }
 
 dependencies {
@@ -66,10 +72,18 @@ dependencies {
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.glide)
+    implementation(libs.hilt)
+    implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.androidx.paging.runtime)
 
     kapt(libs.androidx.lifecycle.compiler)
+    kapt(libs.kapt.hilt)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+}
+
+kapt {
+    correctErrorTypes = true
 }

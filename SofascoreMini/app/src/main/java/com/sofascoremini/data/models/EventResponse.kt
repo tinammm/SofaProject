@@ -12,7 +12,8 @@ data class EventResponse(
     val startDate: String?,
     val homeScore: Score,
     val awayScore: Score,
-    val winnerCode: WinnerCode?
+    val winnerCode: WinnerCode?,
+    val round: Int
 ) : Serializable
 
 enum class Status(val status: String) {
@@ -38,7 +39,7 @@ enum class WinnerCode(val code: String) {
 data class Country(
     val id: Int,
     val name: String
-)
+) : Serializable
 
 data class Score(
     val total: Int?,
@@ -49,11 +50,18 @@ data class Score(
     val overtime: Int?
 )
 
+data class Sport(
+    val id: Int,
+    val name: String,
+    val slug: SportSlug
+) : Serializable
+
 data class Tournament(
     val id: Int,
     val name: String,
+    val sport: Sport,
     val country: Country
-)
+) : Serializable
 
 data class Team(
     val id: Int,

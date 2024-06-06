@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="52dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    android:background="@drawable/date_underlined"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="4dp">
+
+    <TextView
+        android:id="@+id/dayOfWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="?attr/surface1"
+        android:textSize="12sp"
+        tools:hint="TODAY" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:textColor="?attr/surface1"
+        android:textSize="12sp"
+        tools:hint="11.12" />
+
+</LinearLayout>

@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
@@ -34,8 +36,7 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // theme setting
+        setHasOptionsMenu(true)
         binding.themeGroup.children.forEach { button ->
             (button as RadioButton).also {
                 if (it.text.toString().lowercase() == getSavedTheme()) {
@@ -66,7 +67,6 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
-
     }
 
     private fun getSavedTheme(): String? {
@@ -86,4 +86,10 @@ class SettingsFragment : Fragment() {
     private fun saveSelectedDateFormat(format: String) {
         preferences.edit().putString(DATE, format).commit()
     }
+
+    @Deprecated("Deprecated in Java", ReplaceWith("menu.clear()"))
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
+    }
+
 }

@@ -11,10 +11,10 @@
         android:layout_height="32dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="12dp"
+        android:contentDescription="@string/tournament_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:contentDescription="@string/tournament_logo" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,25 +29,25 @@
             android:id="@+id/tournament_country"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:hint="Spain"
-            android:textSize="14sp"
             android:textColor="?attr/n_lv_1"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:hint="Spain" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@string/pointer_right"
-            android:src="@drawable/ic_pointer_right"/>
+            android:src="@drawable/ic_pointer_right" />
 
         <TextView
             android:id="@+id/tournament_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:hint="LaLiga"
-            android:textSize="14sp"
             android:textColor="?attr/n_lv_2"
-            android:textStyle="bold" />
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:hint="LaLiga" />
 
     </LinearLayout>
 
