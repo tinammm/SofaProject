@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="Theme.SofascoreMini">
+        <attr name="colorPrimary" format="reference|color" />
+        <attr name="colorPrimaryVariant" format="reference|color" />
+        <attr name="colorPrimaryDark" format="reference|color" />
+        <attr name="colorSecondary" format="reference|color" />
+        <attr name="colorSecondaryVariant" format="reference|color" />
+        <attr name="colorSecondaryFixed" format="reference|color" />
+        <attr name="colorOnPrimary" format="reference|color" />
+        <attr name="colorOnSecondary" format="reference|color" />
+        <attr name="surface0" format="reference|color" />
+        <attr name="surface1" format="reference|color" />
+        <attr name="surface2" format="reference|color" />
+        <attr name="n_lv_1" format="reference|color" />
+        <attr name="n_lv_2" format="reference|color" />
+        <attr name="n_lv_3" format="reference|color" />
+        <attr name="colorSurface" format="reference|color" />
+        <attr name="error" format="reference|color" />
+        <attr name="colorOutline" format="reference|color" />
+        <attr name="success" format="reference|color" />
+        <attr name="colorTertiary" format="reference|color" />
+    </declare-styleable>
+</resources>
