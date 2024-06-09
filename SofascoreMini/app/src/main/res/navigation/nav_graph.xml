@@ -7,9 +7,49 @@
     <fragment
         android:id="@+id/mainListFragment"
         android:name="com.sofascoremini.ui.main.MainListFragment"
-        android:label="" />
+        android:label="" >
+        <action
+            android:id="@+id/action_mainListFragment_to_tournamentDetailsFragment"
+            app:destination="@id/tournamentDetailsFragment">
+            <argument
+                android:name="tournament"
+                app:argType="com.sofascoremini.data.models.Tournament"/>
+        </action>
+        <action
+            android:id="@+id/action_mainListFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment">
+            <argument
+                android:name="event"
+                app:argType="com.sofascoremini.data.models.EventResponse"/>
+        </action>
+    </fragment>
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.sofascoremini.ui.settings.SettingsFragment"
         android:label="Settings" />
+
+    <fragment
+        android:id="@+id/tournamentDetailsFragment"
+        android:name="com.sofascoremini.ui.tournament_details.TournamentDetailsFragment"
+        android:label="">
+        <argument
+            android:name="tournament"
+            app:argType="com.sofascoremini.data.models.Tournament" />
+        <action
+            android:id="@+id/action_tournamentDetailsFragment_to_eventDetailsFragment"
+            app:destination="@id/eventDetailsFragment">
+            <argument
+                android:name="event"
+                app:argType="com.sofascoremini.data.models.EventResponse"/>
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/eventDetailsFragment"
+        android:name="com.sofascoremini.ui.event_details.EventDetailsFragment"
+        android:label="">
+        <argument
+            android:name="event"
+            app:argType="com.sofascoremini.data.models.EventResponse"/>
+    </fragment>
 </navigation>

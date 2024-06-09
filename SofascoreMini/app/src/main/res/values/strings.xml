@@ -24,4 +24,22 @@
     <string name="tournament_logo">tournament_logo</string>
     <string name="away_team_logo">away team logo</string>
     <string name="home_team_logo">home team logo</string>
+    <string name="no_events">There are no events to display :(</string>
+    <string name="country_image">Country image</string>
+    <string name="matches_item">Matches</string>
+    <string name="standings_item">Standings</string>
+    <string name="hashtag">#</string>
+    <string name="team">Team</string>
+    <string name="w">W</string>
+    <string name="d">D</string>
+    <string name="p">P</string>
+    <string name="l">L</string>
+    <string name="goals">Goals</string>
+    <string name="pts">PTS</string>
+    <string name="diff">DIFF</string>
+    <string name="str">Str</string>
+    <string name="gb">GB</string>
+    <string name="pct">PCT</string>
+    <string name="round">Round %d</string>
+    <string name="hyfen">-</string>
 </resources>
