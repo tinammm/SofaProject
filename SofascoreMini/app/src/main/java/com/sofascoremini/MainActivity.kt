@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -16,7 +17,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import com.sofascoremini.databinding.ActivityMainBinding
 import com.sofascoremini.ui.settings.THEME
 import com.sofascoremini.util.getColorFromAttribute
-import com.sofascoremini.util.loadImage
+import com.sofascoremini.util.loadTournamentImage
 import com.sofascoremini.util.setUpAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -86,11 +87,12 @@ class MainActivity : AppCompatActivity() {
         backgroundColor: Int = R.attr.colorPrimary,
         hasEventLabel: Boolean = false,
         label: String = "",
-        labelImageUrl: String = ""
+        labelImageId: Int = 0,
+        navigateFunction: () -> Unit = {}
     ) {
 
         binding.apply {
-            appLogo.visibility = if (logoVisibility) View.VISIBLE else View.GONE
+            appLogo.isVisible = logoVisibility
             eventDetailsLabel.visibility = View.GONE
             toolbar.apply {
                 if (hasNavIcon) {
@@ -102,8 +104,10 @@ class MainActivity : AppCompatActivity() {
             if (hasEventLabel) {
                 eventDetailsLabel.visibility = View.VISIBLE
                 tournamentInfo.text = label
-                tournamentLogo.apply {
-                    loadImage(labelImageUrl)
+                tournamentLogo.loadTournamentImage(labelImageId)
+
+                eventDetailsLabel.setOnClickListener {
+                    navigateFunction()
                 }
             }
         }

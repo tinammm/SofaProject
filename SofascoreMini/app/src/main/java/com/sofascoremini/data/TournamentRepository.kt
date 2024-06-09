@@ -15,14 +15,8 @@ class TournamentRepository @Inject constructor(
             api.getTournamentStandings(id)
         }
 
-    suspend fun getTournamentDetails(id: Int) =
-        safeResponse {
-            api.getTournamentDetails(id)
-        }
-
     suspend fun getTournamentMatches(id: Int, span: Span, page: Int) =
         safeResponse {
             api.getTournamentMatches(id, span.span, page)
         }
-
 }

@@ -41,4 +41,28 @@
         <item name="android:textSize">32sp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="headlineOneDarkText">
+        <item name="android:textColor">?attr/n_lv_1</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="body">
+        <item name="android:textColor">?attr/n_lv_1</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:ems">10</item>
+        <item name="android:maxLines">2</item>
+    </style>
+
+    <style name="headlineThree">
+        <item name="android:textColor">?attr/n_lv_1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="tournamentLogoShape">
+        <item name="cornerSize">8dp</item>
+    </style>
 </resources>

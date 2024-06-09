@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    android:gravity="end"
+    android:orientation="horizontal">
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="1dp"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/incident_icon"
+            android:layout_marginHorizontal="16dp"
+            android:src="@drawable/goal_icon" />
+
+        <TextView
+            android:id="@+id/minutes"
+            style="@style/microText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/minutes_format"
+            tools:hint="23'" />
+
+    </LinearLayout>
+</LinearLayout>

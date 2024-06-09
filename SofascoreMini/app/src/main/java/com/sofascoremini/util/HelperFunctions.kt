@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.sofascoremini.data.models.JsonCountry
@@ -18,6 +19,7 @@ import java.time.format.DateTimeFormatter
 import java.util.Date
 import java.util.Locale
 import kotlin.math.roundToInt
+import kotlin.random.Random
 
 fun setUpAppTheme(theme: String) {
     if (theme == "light")
@@ -35,6 +37,23 @@ fun extractDate(startDate: String, dateFormatPattern: String): String {
         Locale.getDefault()
     )
     return localDate.format(outputFormatter)
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun extractShortDate(startDate: String, dateFormatPattern: String): String {
+    val zonedDateTime = ZonedDateTime.parse(startDate, DateTimeFormatter.ISO_DATE_TIME)
+    val localDate = zonedDateTime.toLocalDate()
+    val outputFormatter = DateTimeFormatter.ofPattern(
+        datePreferenceMapper(dateFormatPattern) + ".YY",
+        Locale.getDefault()
+    )
+    return localDate.format(outputFormatter)
+}
+
+@RequiresApi(Build.VERSION_CODES.O)
+fun isToday(startDate: String) : Boolean {
+    val zonedDateTime = ZonedDateTime.parse(startDate, DateTimeFormatter.ISO_DATE_TIME)
+    return zonedDateTime.toLocalDate() == LocalDate.now()
 }
 
 fun extractHourMinute(startDate: String): String {
@@ -63,10 +82,13 @@ fun setTextColor(color: Int, vararg views: TextView) {
     views.forEach { it.setTextColor(color) }
 }
 
-fun Float.round(decimals: Int = 2): Float = "%.${decimals}f".format(this).toFloat()
+fun Float.round(decimals: Int = 2): Float {
+    val formatString = "%.${decimals}f"
+    return String.format(Locale.US, formatString, this).toFloat()
+}
 
 fun setUpVisibility(isVisible: Boolean, vararg views: View) {
-    views.forEach { it.visibility = if (isVisible) View.VISIBLE else View.GONE}
+    views.forEach { it.isVisible = isVisible }
 }
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -97,6 +119,7 @@ fun datePreferenceMapper(format: String): String {
     else "MM.dd"
 }
 
+
 fun readJsonFromAssets(context: Context, fileName: String): String {
     return context.assets.open(fileName).bufferedReader().use { it.readText() }
 }
@@ -104,4 +127,33 @@ fun readJsonFromAssets(context: Context, fileName: String): String {
 fun parseJsonToModel(jsonString: String): List<JsonCountry> {
     val gson = Gson()
     return gson.fromJson(jsonString, object : TypeToken<List<JsonCountry>>() {}.type)
+}
+
+
+fun getRandomYellowCardReason(seed: Long): String {
+    val yellowCardReasons = listOf(
+        "Foul",
+        "Argument",
+        "Delaying",
+        "Holding",
+        "Diving",
+        "Dissent",
+        "Disrespect"
+    )
+    val random = Random(seed)
+    return yellowCardReasons[random.nextInt(yellowCardReasons.size)]
+}
+
+fun getRandomRedCardReason(seed: Long): String {
+    val redCardReasons = listOf(
+        "Language",
+        "Biting",
+        "Tackling",
+        "Punching",
+        "Spitting",
+        "Fighting",
+        "Elbowing"
+    )
+    val random = Random(seed)
+    return redCardReasons[random.nextInt(redCardReasons.size)]
 }

@@ -33,8 +33,9 @@ class MainListFragment : Fragment() {
 
     private lateinit var binding: FragmentMainListBinding
     private val mainListViewModel: MainListViewModel by activityViewModels()
+    private val preferences by lazy { PreferenceManager.getDefaultSharedPreferences(requireContext()) }
     private val matchEventAdapter by lazy {
-        MatchEventAdapter().apply {
+        MatchEventAdapter(requireContext()).apply {
             onTournamentClick = {
                 val action = MainListFragmentDirections.actionMainListFragmentToTournamentDetailsFragment(it)
                 findNavController().navigate(action)
@@ -45,7 +46,6 @@ class MainListFragment : Fragment() {
             }
         }
     }
-    private val preferences by lazy { PreferenceManager.getDefaultSharedPreferences(requireContext()) }
     private val datesAdapter by lazy {
         DatesAdapter(
             context = requireContext(),

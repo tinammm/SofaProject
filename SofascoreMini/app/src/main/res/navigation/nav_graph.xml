@@ -51,5 +51,12 @@
         <argument
             android:name="event"
             app:argType="com.sofascoremini.data.models.EventResponse"/>
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_tournamentDetailsFragment"
+            app:destination="@id/tournamentDetailsFragment">
+            <argument
+                android:name="tournament"
+                app:argType="com.sofascoremini.data.models.Tournament" />
+        </action>
     </fragment>
 </navigation>

@@ -13,7 +13,8 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.tabs.TabLayoutMediator
 import com.sofascoremini.databinding.FragmentTournamentDetailsBinding
 import com.sofascoremini.ui.tournament_details.adapters.ViewPagerAdapter
-import com.sofascoremini.util.loadImage
+import com.sofascoremini.util.loadCountryImage
+import com.sofascoremini.util.loadTournamentImage
 import com.sofascoremini.util.parseJsonToModel
 import com.sofascoremini.util.readJsonFromAssets
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class TournamentDetailsFragment : Fragment() {
     private lateinit var binding: FragmentTournamentDetailsBinding
     private val safeArgs: TournamentDetailsFragmentArgs by navArgs()
-    private val tournamentViewModel: TournamentViewModel by activityViewModels()
+    private val tournamentViewModel by activityViewModels<TournamentViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -35,7 +36,6 @@ class TournamentDetailsFragment : Fragment() {
         super.onAttach(context)
         tournamentViewModel.setTournamentId(safeArgs.tournament.id)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,17 +49,9 @@ class TournamentDetailsFragment : Fragment() {
             }
             tournamentToolbar.name.text = safeArgs.tournament.name
             tournamentToolbar.countryName.text = safeArgs.tournament.country.name
-            tournamentToolbar.logo.apply {
-                loadImage("https://academy-backend.sofascore.dev/tournament/${safeArgs.tournament.id}/image")
-            }
-            tournamentToolbar.countryLogo.apply {
-                loadImage("https://flagcdn.com/w160/${country?.code?.lowercase()}.png")
-            }
+            tournamentToolbar.logo.loadTournamentImage(safeArgs.tournament.id)
+            tournamentToolbar.countryLogo.loadCountryImage(country?.code?.lowercase())
         }
-
-        /*(requireActivity() as MainActivity).setUpAppBar(
-            logoVisibility = false, hasNavIcon = true
-        )*/
 
         binding.pager.adapter = ViewPagerAdapter(requireActivity())
         val tabText = listOf("Matches", "Standings")

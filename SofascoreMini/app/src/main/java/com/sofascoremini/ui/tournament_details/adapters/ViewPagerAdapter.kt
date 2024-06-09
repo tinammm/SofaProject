@@ -3,8 +3,8 @@ package com.sofascoremini.ui.tournament_details.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.sofascoremini.ui.tournament_details.MatchesFragment
-import com.sofascoremini.ui.tournament_details.StandingsFragment
+import com.sofascoremini.ui.tournament_details.matches.MatchesFragment
+import com.sofascoremini.ui.tournament_details.standings.StandingsFragment
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {

@@ -1,8 +1,8 @@
 package com.sofascoremini.util
 
+import com.sofascoremini.data.remote.Result
 import retrofit2.HttpException
 import retrofit2.Response
-import com.sofascoremini.data.remote.Result
 
 suspend fun <T> safeResponse(func: suspend () -> T): Result<T> {
     return try {

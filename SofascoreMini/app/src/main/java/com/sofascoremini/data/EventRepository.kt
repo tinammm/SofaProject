@@ -9,9 +9,11 @@ import javax.inject.Singleton
 class EventRepository @Inject constructor(
     private val api: ApiService
 ) {
-    suspend fun getEventIncidents(id: Int){
-        safeResponse {
-            api.getEventIncidents(id)
-        }
+    suspend fun getEventIncidents(id: Int) = safeResponse {
+        api.getEventIncidents(id)
+    }
+
+    suspend fun getEventDetails(id: Int) = safeResponse {
+        api.getEventDetails(id)
     }
 }
