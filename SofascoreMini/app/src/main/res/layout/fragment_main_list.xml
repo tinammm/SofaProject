@@ -5,19 +5,9 @@
     android:layout_height="match_parent"
     android:background="?attr/surface0">
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <include
         android:id="@+id/top_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:stateListAnimator="@null"
-        app:elevation="0dp"
-        app:itemBackground="@drawable/icon_underlined"
-        app:itemIconSize="16dp"
-        app:itemIconTint="?attr/surface1"
-        app:itemTextColor="?attr/surface1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/main_list_topbar" />
+        layout="@layout/sports_toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dateTab"
@@ -84,18 +74,6 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <ProgressBar
-        android:id="@+id/loadingProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:indeterminate="true"
-        android:indeterminateTint="?attr/colorPrimaryVariant"
-        android:indeterminateTintMode="src_atop"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/dateAndCount" />
 
     <TextView
         android:id="@+id/emptyPlaceholder"
@@ -113,6 +91,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dateAndCount" />
+
+
+    <include layout="@layout/progress_bar"
+        android:id="@+id/loadingProgressBar"
+        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/dateAndCount"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

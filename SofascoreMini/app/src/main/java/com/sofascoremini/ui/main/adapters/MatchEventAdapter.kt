@@ -211,8 +211,8 @@ open class MatchEventAdapter(context: Context) : RecyclerView.Adapter<RecyclerVi
 
     fun updateItems(newItems: List<MatchEventItem>) {
         val diffResult = DiffUtil.calculateDiff(MatchEventDiffCallback(items, newItems))
-        diffResult.dispatchUpdatesTo(this)
         items = newItems
+        diffResult.dispatchUpdatesTo(this)
     }
 
     class MatchEventDiffCallback(

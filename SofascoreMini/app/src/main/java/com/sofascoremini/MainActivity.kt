@@ -53,6 +53,10 @@ class MainActivity : AppCompatActivity() {
                     setUpAppBar(logoVisibility = false, hasNavIcon = true)
                 }
 
+                R.id.leaguesFragment -> {
+                    setUpAppBar(logoVisibility = false, hasNavIcon = true)
+                }
+
                 R.id.tournamentDetailsFragment -> {
                     setUpAppBar(
                         logoVisibility = false, hasNavIcon = true
@@ -128,7 +132,11 @@ class MainActivity : AppCompatActivity() {
 
             R.id.action_settings -> {
                 navController.navigate(R.id.settingsFragment)
-                binding.toolbar.setNavigationIcon(R.drawable.ic_arrow_back)
+                true
+            }
+
+            R.id.action_tournament -> {
+                navController.navigate(R.id.leaguesFragment)
                 true
             }
 

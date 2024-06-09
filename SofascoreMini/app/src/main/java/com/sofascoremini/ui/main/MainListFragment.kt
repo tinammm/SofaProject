@@ -96,7 +96,7 @@ class MainListFragment : Fragment() {
                 binding.swipeRefresh.isRefreshing = false
             }
 
-            binding.topNavigation.setOnItemSelectedListener {
+            binding.topNavigation.root.setOnItemSelectedListener {
                 val selectedDate = mainListViewModel.selectedDate.value ?: LocalDate.now()
                 when (it.itemId) {
                     R.id.action_football -> {
@@ -132,25 +132,25 @@ class MainListFragment : Fragment() {
         mainListViewModel.mainList.observe(viewLifecycleOwner) { result ->
             when (result) {
                 is UiState.Success -> {
+                    matchEventAdapter.updateItems(result.data)
                     binding.apply {
-                        setUpVisibility(true, eventRecyclerView, dateAndCount)
-                        setUpVisibility(false, loadingProgressBar, emptyPlaceholder)
+                        setUpVisibility(false, loadingProgressBar.root, emptyPlaceholder)
+                        setUpVisibility(true, dateAndCount, eventRecyclerView)
                         numOfEvents.text = getString(R.string.d_events, result.data.size)
                     }
-                    matchEventAdapter.updateItems(result.data)
                 }
 
                 is UiState.Empty -> {
                     binding.apply {
                         setUpVisibility(true, emptyPlaceholder)
-                        setUpVisibility(false, loadingProgressBar, eventRecyclerView, dateAndCount)
+                        setUpVisibility(false, loadingProgressBar.root, dateAndCount, eventRecyclerView)
                     }
                 }
 
                 is UiState.Loading -> {
                     binding.apply {
-                        setUpVisibility(true, loadingProgressBar)
-                        setUpVisibility(false, emptyPlaceholder, eventRecyclerView, dateAndCount)
+                        setUpVisibility(true, loadingProgressBar.root)
+                        setUpVisibility(false, emptyPlaceholder, dateAndCount, eventRecyclerView)
                     }
                 }
 
@@ -161,7 +161,7 @@ class MainListFragment : Fragment() {
                             emptyPlaceholder,
                             eventRecyclerView,
                             dateAndCount,
-                            loadingProgressBar
+                            loadingProgressBar.root
                         )
                     }
                     Toast.makeText(requireContext(), "A network error occurred", Toast.LENGTH_SHORT)

@@ -2,6 +2,7 @@ package com.sofascoremini.data.remote
 
 import com.sofascoremini.data.models.EventResponse
 import com.sofascoremini.data.models.IncidentResponse
+import com.sofascoremini.data.models.Tournament
 import com.sofascoremini.data.models.TournamentStandingsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -35,4 +36,9 @@ interface ApiService {
     suspend fun getEventDetails(
         @Path("id") slug: Int
     ): EventResponse
+
+    @GET("sport/{slug}/tournaments")
+    suspend fun getTournamentsForSport(
+        @Path("slug") slug: String
+    ): List<Tournament>
 }

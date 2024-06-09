@@ -46,7 +46,7 @@ class StandingsFragment() : Fragment() {
                 is UiState.Success -> {
                     binding.apply {
                         setUpVisibility(true, standingsRecycler)
-                        setUpVisibility(false, loadingProgressBar)
+                        setUpVisibility(false, loadingProgressBar.root)
                     }
 
                     standingsAdapter.updateItems(
@@ -59,7 +59,7 @@ class StandingsFragment() : Fragment() {
 
                 is UiState.Loading -> {
                     binding.apply {
-                        setUpVisibility(true, loadingProgressBar)
+                        setUpVisibility(true, loadingProgressBar.root)
                         setUpVisibility(false, standingsRecycler)
                     }
                 }
@@ -69,7 +69,7 @@ class StandingsFragment() : Fragment() {
                         setUpVisibility(
                             false,
                             standingsRecycler,
-                            loadingProgressBar
+                            loadingProgressBar.root
                         )
                     }
                     Toast.makeText(requireContext(), "A network error occurred", Toast.LENGTH_SHORT)

@@ -3,17 +3,9 @@ package com.sofascoremini.data.models
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-data class TournamentDetails(
-    val id: Int,
-    val name: String,
-    val slug: SportSlug,
-    val sport: Sport,
-    val country: Country
-) : Serializable
-
 data class TournamentStandingsResponse(
     val id: Int,
-    val tournament: TournamentDetails,
+    val tournament: Tournament,
     val type: Type,
     val sortedStandingsRows: List<Standings>
 ) : Serializable

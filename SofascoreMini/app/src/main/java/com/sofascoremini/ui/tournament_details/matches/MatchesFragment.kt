@@ -64,8 +64,8 @@ class MatchesFragment : Fragment() {
 
         lifecycleScope.launch {
             matchesPagingAdapter.loadStateFlow.collectLatest {
-                binding.loadingProgressBar.isVisible = (it.refresh is LoadState.Loading)
-                binding.loadingProgressBarAppend.isVisible = (it.append is LoadState.Loading)
+                binding.loadingProgressBar.root.isVisible = (it.refresh is LoadState.Loading)
+                binding.loadingProgressBarAppend.root.isVisible = (it.append is LoadState.Loading)
             }
         }
     }

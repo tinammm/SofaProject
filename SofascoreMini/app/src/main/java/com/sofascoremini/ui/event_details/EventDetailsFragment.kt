@@ -118,7 +118,7 @@ class EventDetailsFragment : Fragment() {
             when (result) {
                 is UiState.Success -> {
                     binding.apply {
-                        setUpVisibility(false, loadingProgressBar)
+                        setUpVisibility(false, loadingProgressBar.root)
                         setUpVisibility(true, incidentsRecycler)
                         incidentsAdapter.updateItems(result.data.map { incident ->
                             when (incident.type) {
@@ -132,14 +132,14 @@ class EventDetailsFragment : Fragment() {
 
                 is UiState.Empty -> {
                     binding.apply {
-                        setUpVisibility(false, loadingProgressBar, incidentsRecycler)
+                        setUpVisibility(false, loadingProgressBar.root, incidentsRecycler)
                         setUpVisibility(true, emptyPlaceholder)
                     }
                 }
 
                 is UiState.Loading -> {
                     binding.apply {
-                        setUpVisibility(true, loadingProgressBar)
+                        setUpVisibility(true, loadingProgressBar.root)
                         setUpVisibility(false, emptyPlaceholder, incidentsRecycler)
                     }
                 }
@@ -149,7 +149,7 @@ class EventDetailsFragment : Fragment() {
                         setUpVisibility(
                             false,
                             emptyPlaceholder,
-                            loadingProgressBar,
+                            loadingProgressBar.root,
                             incidentsRecycler
                         )
                     }
@@ -181,7 +181,7 @@ class EventDetailsFragment : Fragment() {
                     date.visibility = View.GONE
                     scoreHome.text = event.homeScore.total.toString()
                     scoreAway.text = event.awayScore.total.toString()
-                    time.text = "Full Time"
+                    time.text = requireContext().getString(R.string.full_time)
                     when (event.winnerCode) {
                         WinnerCode.HOME -> {
                             setTextColor(loseColor, scoreAway, connector, time)
