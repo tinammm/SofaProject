@@ -38,6 +38,9 @@ _Settings_:
 * Date format options (DD/MM/YYYY and MM/DD/YYYY).
 * About section with project and developer details.
 
+_Leagues_ :
+* Displays simple list of clickable tournament names per sport.
+
 ### Screenshots
 <div align="center">
     <img src="SofascoreMini/screenshots/Screenshot_empty_main_list.jpg?raw=true" width="140px"</img> 
