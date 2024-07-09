@@ -38,6 +38,29 @@ _Settings_:
 * Date format options (DD/MM/YYYY and MM/DD/YYYY).
 * About section with project and developer details.
 
+### Screenshots
+<div align="center">
+    <img src="SofascoreMini/screenshots/Screenshot_empty_main_list.jpg?raw=true" width="140px"</img> 
+    <img height="0" width="18px">
+    <img src="SofascoreMini/screenshots/Screenshot_main_list_page.jpg?raw=true" width="140px"</img>
+    <img height="0" width="18px">
+    <img src="SofascoreMini/screenshots/Screenshot_empty_event_details.jpg?raw=true" width="140px"</img> 
+    <img height="0" width="18px">
+    <img src="SofascoreMini/screenshots/Screenshot_event_details_football.jpg?raw=true" width="140px"</img> 
+    <img height="0" width="18px">
+    <img src="SofascoreMini/screenshots/Screenshot_event_details_am_football.jpg?raw=true" width="140px"</img> 
+    <img height="0" width="18px">
+    <img src="SofascoreMini/screenshots/Screenshot_tournament_matches.jpg?raw=true" width="140px"</img> 
+    <img height="0" width="18px">
+    <img src="/SofascoreMini/screenshots/Screenshot_tournament_standings.jpg?raw=true" width="140px"</img> 
+    <img height="0" width="18px">
+    <img src="SofascoreMini/screenshots/Screenshot_settings_light.jpg?raw=true" width="140px"</img> 
+    <img height="0" width="18px">
+    <img src="/SofascoreMini/screenshots/Screenshot_settings_dark.jpg?raw=true" width="140px"</img> 
+    <img height="0" width="18px">
+    <img src="SofascoreMini/screenshots/Screenshot_leagues_page.jpg?raw=true" width="140px"</img>
+    <img height="0" width="18px">
+</div>
 
 ## API
 API documentation: https://academy-backend.sofascore.dev/api/docs.
