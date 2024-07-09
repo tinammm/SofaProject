@@ -22,6 +22,9 @@
                 android:name="event"
                 app:argType="com.sofascoremini.data.models.EventResponse"/>
         </action>
+        <action
+            android:id="@+id/action_mainListFragment_to_leaguesFragment"
+            app:destination="@id/leaguesFragment" />
     </fragment>
 
     <fragment
@@ -51,5 +54,24 @@
         <argument
             android:name="event"
             app:argType="com.sofascoremini.data.models.EventResponse"/>
+        <action
+            android:id="@+id/action_eventDetailsFragment_to_tournamentDetailsFragment"
+            app:destination="@id/tournamentDetailsFragment">
+            <argument
+                android:name="tournament"
+                app:argType="com.sofascoremini.data.models.Tournament" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/leaguesFragment"
+        android:name="com.sofascoremini.ui.leagues.LeaguesFragment"
+        android:label="Leagues" >
+        <action
+            android:id="@+id/action_leaguesFragment_to_tournamentDetailsFragment"
+            app:destination="@id/tournamentDetailsFragment">
+            <argument
+                android:name="tournament"
+                app:argType="com.sofascoremini.data.models.Tournament" />
+        </action>
     </fragment>
 </navigation>

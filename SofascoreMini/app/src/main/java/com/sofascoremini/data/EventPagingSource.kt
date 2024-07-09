@@ -8,7 +8,7 @@ import com.sofascoremini.ui.main.adapters.MatchEventItem
 import javax.inject.Inject
 import javax.inject.Singleton
 
-const val ITEMS_PER_PAGE = 30
+const val ITEMS_PER_PAGE = 10
 
 @Singleton
 class EventPagingSource @Inject constructor(
@@ -25,9 +25,10 @@ class EventPagingSource @Inject constructor(
         }
     }
 
+
     override suspend fun load(params: LoadParams<Pair<Span, Int>>): LoadResult<Pair<Span, Int>,
             MatchEventItem> {
-        val (span, page) = params.key ?: Pair(Span.LAST, 0)
+        val (span, page) = params.key ?: Pair(Span.LAST, 1)
 
 
         val nextSpan = if (span == Span.LAST && page == 0) Span.NEXT else span
@@ -45,19 +46,15 @@ class EventPagingSource @Inject constructor(
         return when (val response =
             tournamentRepository.getTournamentMatches(id = tournamentId, span, page)) {
             is Result.Success -> {
-                val data = response.data.groupBy { it.round }.flatMap { (key, events) ->
-                    listOf(MatchEventItem.RoundHeader(key)) + events.sortedBy { it.startDate }
-                        .map { MatchEventItem.EventItem(it) }
-                }
+                val data = response.data.map { MatchEventItem.EventItem(it) }.toList()
                 val nextKey = if (response.data.isNotEmpty()) Pair(nextSpan, nextPage) else null
-                val prevKey = Pair(prevSpan, prevPage)
+                val prevKey = if (response.data.isNotEmpty()) Pair(prevSpan, prevPage) else null
 
                 LoadResult.Page(
                     data = data,
                     prevKey = prevKey,
                     nextKey = nextKey
                 )
-
             }
 
             is Result.Error -> {

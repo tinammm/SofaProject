@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="8dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/type_item_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iconStart"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            android:contentDescription="@string/incident_icon"
+            android:src="@drawable/basketball_1_point" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/scoreHome"
+        style="@style/headlineThree"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/type_item_start"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:hint="12-12" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/minutes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:text="@string/minutes_format"
+            tools:hint="12'" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/scoreAway"
+        style="@style/headlineThree"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="28dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/type_item_end"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:hint="12-12" />
+
+    <LinearLayout
+        android:id="@+id/type_item_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/iconEnd"
+            android:layout_width="24dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
+            android:contentDescription="@string/incident_icon"
+            android:src="@drawable/basketball_1_point" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

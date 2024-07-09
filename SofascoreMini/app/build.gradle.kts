@@ -75,9 +75,12 @@ dependencies {
     implementation(libs.hilt)
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.hilt.work)
+    implementation("androidx.work:work-runtime-ktx:2.7.1")
 
     kapt(libs.androidx.lifecycle.compiler)
-    kapt(libs.kapt.hilt)
+    kapt(libs.androidx.hilt.compiler)
+    kapt("com.google.dagger:hilt-android-compiler:2.49")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

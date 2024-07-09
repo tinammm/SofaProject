@@ -3,13 +3,14 @@ package com.sofascoremini.ui.tournament_details
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.switchMap
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.liveData
+import androidx.paging.insertSeparators
 import com.sofascoremini.data.EventPagingSource
 import com.sofascoremini.data.ITEMS_PER_PAGE
 import com.sofascoremini.data.TournamentRepository
@@ -19,8 +20,10 @@ import com.sofascoremini.data.remote.Result
 import com.sofascoremini.ui.main.UiState
 import com.sofascoremini.ui.main.adapters.MatchEventItem
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @HiltViewModel
 class TournamentViewModel @Inject constructor(
@@ -33,11 +36,28 @@ class TournamentViewModel @Inject constructor(
 
     private val _tournamentId = MutableLiveData<Int>()
 
-
-    val liveData: LiveData<PagingData<MatchEventItem>> = _tournamentId.switchMap { id ->
-        Pager(PagingConfig(pageSize = ITEMS_PER_PAGE, 3)) {
+    val eventsLiveData: LiveData<PagingData<MatchEventItem>> = _tournamentId.switchMap { id ->
+        Pager(
+            PagingConfig(
+                pageSize = ITEMS_PER_PAGE,
+                prefetchDistance = 3,
+                enablePlaceholders = false
+            )
+        ) {
             EventPagingSource(tournamentRepository, id)
-        }.liveData.cachedIn(viewModelScope)
+        }.flow
+            .map { pagingData ->
+                pagingData.insertSeparators { before, after ->
+                    if (before == null) {
+                        MatchEventItem.RoundHeader(0)
+                    } else if (before is MatchEventItem.EventItem && after is MatchEventItem.EventItem && before.event.round != after.event.round) {
+                        MatchEventItem.RoundHeader(after.event.round)
+                    } else {
+                        null
+                    }
+                }
+            }.asLiveData()
+            .cachedIn(viewModelScope)
     }
 
     fun setTournamentId(id: Int) {
@@ -48,7 +68,7 @@ class TournamentViewModel @Inject constructor(
         viewModelScope.launch {
             _tournamentStandings.value = UiState.Loading
             _tournamentStandings.value = when (val result =
-                tournamentRepository.getTournamentStandings(_tournamentId.value?: 0)) {
+                tournamentRepository.getTournamentStandings(_tournamentId.value ?: 0)) {
                 is Result.Success -> {
                     if (result.data.isEmpty()) {
                         UiState.Empty

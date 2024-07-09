@@ -42,4 +42,11 @@
     <string name="pct">PCT</string>
     <string name="round">Round %d</string>
     <string name="hyfen">-</string>
+    <string name="no_results_yet">No results yet.</string>
+    <string name="tournament_button">View Tournament Details</string>
+    <string name="goal_icon">goal icon</string>
+    <string name="score_text">%d-%d</string>
+    <string name="incident_icon">Incident icon</string>
+    <string name="minutes_format">%d\'</string>
+    <string name="full_time">Full Time</string>
 </resources>

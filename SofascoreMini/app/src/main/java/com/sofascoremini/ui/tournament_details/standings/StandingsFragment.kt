@@ -1,4 +1,4 @@
-package com.sofascoremini.ui.tournament_details
+package com.sofascoremini.ui.tournament_details.standings
 
 import android.content.Context
 import android.os.Bundle
@@ -11,13 +11,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sofascoremini.databinding.FragmentStandingsBinding
 import com.sofascoremini.ui.main.UiState
+import com.sofascoremini.ui.tournament_details.TournamentViewModel
 import com.sofascoremini.ui.tournament_details.adapters.StandingsAdapter
 import com.sofascoremini.util.setUpVisibility
 
-class StandingsFragment : Fragment() {
+
+class StandingsFragment() : Fragment() {
 
     private lateinit var binding: FragmentStandingsBinding
-    private val standingsViewModel: TournamentViewModel by activityViewModels()
+    private val standingsViewModel by activityViewModels<TournamentViewModel>()
     private val standingsAdapter: StandingsAdapter by lazy { StandingsAdapter() }
 
     override fun onCreateView(
@@ -44,7 +46,7 @@ class StandingsFragment : Fragment() {
                 is UiState.Success -> {
                     binding.apply {
                         setUpVisibility(true, standingsRecycler)
-                        setUpVisibility(false, loadingProgressBar)
+                        setUpVisibility(false, loadingProgressBar.root)
                     }
 
                     standingsAdapter.updateItems(
@@ -57,7 +59,7 @@ class StandingsFragment : Fragment() {
 
                 is UiState.Loading -> {
                     binding.apply {
-                        setUpVisibility(true, loadingProgressBar)
+                        setUpVisibility(true, loadingProgressBar.root)
                         setUpVisibility(false, standingsRecycler)
                     }
                 }
@@ -67,7 +69,7 @@ class StandingsFragment : Fragment() {
                         setUpVisibility(
                             false,
                             standingsRecycler,
-                            loadingProgressBar
+                            loadingProgressBar.root
                         )
                     }
                     Toast.makeText(requireContext(), "A network error occurred", Toast.LENGTH_SHORT)

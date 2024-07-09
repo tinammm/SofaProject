@@ -1,7 +1,10 @@
 package com.sofascoremini.ui.main.adapters
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
+import android.preference.PreferenceManager
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
@@ -16,10 +19,14 @@ import com.sofascoremini.databinding.ItemDividerBinding
 import com.sofascoremini.databinding.MatchCellItemBinding
 import com.sofascoremini.databinding.RoundHeaderBindingBinding
 import com.sofascoremini.databinding.TournamentHeaderItemBinding
+import com.sofascoremini.ui.settings.DATE
 import com.sofascoremini.util.calculateMinutesPassed
 import com.sofascoremini.util.extractHourMinute
+import com.sofascoremini.util.extractShortDate
 import com.sofascoremini.util.getColorFromAttribute
-import com.sofascoremini.util.loadImage
+import com.sofascoremini.util.isToday
+import com.sofascoremini.util.loadTeamImage
+import com.sofascoremini.util.loadTournamentImage
 import com.sofascoremini.util.setTextColor
 
 sealed class MatchEventItem {
@@ -29,11 +36,12 @@ sealed class MatchEventItem {
     data object Divider : MatchEventItem()
 }
 
-open class MatchEventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+open class MatchEventAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var items = emptyList<MatchEventItem>()
     var onTournamentClick: ((tournament: Tournament) -> Unit)? = null
     var onEventClick: ((event: EventResponse) -> Unit)? = null
+    private val preferences by lazy { PreferenceManager.getDefaultSharedPreferences(context) }
 
     companion object {
         private const val VIEW_TYPE_TOURNAMENT = 0
@@ -62,7 +70,8 @@ open class MatchEventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             )
 
             VIEW_TYPE_EVENT -> EventItemViewHolder(
-                MatchCellItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+                MatchCellItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+                preferences = preferences
             )
 
             VIEW_TYPE_DIVIDER -> DividerViewHolder(
@@ -115,7 +124,8 @@ open class MatchEventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     class EventItemViewHolder(
-        private val binding: MatchCellItemBinding
+        private val binding: MatchCellItemBinding,
+        private val preferences: SharedPreferences
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
@@ -125,22 +135,20 @@ open class MatchEventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             eventItem: MatchEventItem.EventItem,
             onEventClick: (event: EventResponse) -> Unit
         ) {
-
+            val format = preferences.getString(DATE, "DD / MM / YYYY") ?: "DD / MM / YYYY"
             binding.apply {
                 root.setOnClickListener {
                     onEventClick.invoke(eventItem.event)
                 }
                 homeTeamName.text = eventItem.event.homeTeam.name
-                homeTeamLogo.apply {
-                    loadImage("https://academy-backend.sofascore.dev/team/${eventItem.event.homeTeam.id}/image")
-                }
+                homeTeamLogo.loadTeamImage(eventItem.event.homeTeam.id)
                 awayTeamName.text = eventItem.event.awayTeam.name
-                awayTeamLogo.apply {
-                    loadImage("https://academy-backend.sofascore.dev/team/${eventItem.event.awayTeam.id}/image")
-                }
+                awayTeamLogo.loadTeamImage(eventItem.event.awayTeam.id)
                 scoreHomeTeam.text = eventItem.event.homeScore.total?.toString().orEmpty()
                 scoreAwayTeam.text = eventItem.event.awayScore.total?.toString().orEmpty()
-                startTime.text = extractHourMinute(eventItem.event.startDate.toString())
+                if (isToday(eventItem.event.startDate.toString()))
+                    startTime.text = extractHourMinute(eventItem.event.startDate.toString())
+                else startTime.text = extractShortDate(eventItem.event.startDate.toString(), format)
 
                 when (eventItem.event.status) {
                     Status.FINISHED -> {
@@ -172,13 +180,13 @@ open class MatchEventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     Status.NOT_STARTED -> status.text = "-"
 
                     Status.IN_PROGRESS -> {
-                        val liveColor = getColorFromAttribute(root.context, R.attr.n_lv_1)
+                        val liveColor = getColorFromAttribute(root.context, R.attr.colorTertiary)
                         status.let {
                             it.text = calculateMinutesPassed(eventItem.event.startDate.toString())
-                            it.setTextColor(getColorFromAttribute(root.context, liveColor))
+                            it.setTextColor(liveColor)
                         }
-                        scoreHomeTeam.setTextColor(getColorFromAttribute(root.context, liveColor))
-                        scoreAwayTeam.setTextColor(getColorFromAttribute(root.context, liveColor))
+                        scoreHomeTeam.setTextColor(liveColor)
+                        scoreAwayTeam.setTextColor(liveColor)
                     }
                 }
             }
@@ -193,9 +201,7 @@ open class MatchEventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.apply {
                 tournamentCountry.text = header.tournament.country.name
                 tournamentName.text = header.tournament.name
-                tournamentLogo.apply {
-                    loadImage("https://academy-backend.sofascore.dev/tournament/${header.tournament.id}/image")
-                }
+                tournamentLogo.loadTournamentImage(header.tournament.id)
             }
             binding.root.setOnClickListener {
                 onTournamentClick?.invoke(header.tournament)
@@ -205,8 +211,8 @@ open class MatchEventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun updateItems(newItems: List<MatchEventItem>) {
         val diffResult = DiffUtil.calculateDiff(MatchEventDiffCallback(items, newItems))
-        diffResult.dispatchUpdatesTo(this)
         items = newItems
+        diffResult.dispatchUpdatesTo(this)
     }
 
     class MatchEventDiffCallback(
@@ -243,29 +249,5 @@ open class MatchEventAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             return oldItem == newItem
         }
 
-    }
-
-    class MatchEventItemDiffCallback : DiffUtil.ItemCallback<MatchEventItem>() {
-        override fun areItemsTheSame(oldItem: MatchEventItem, newItem: MatchEventItem): Boolean {
-            return when {
-                oldItem is MatchEventItem.EventItem && newItem is MatchEventItem.EventItem ->
-                    oldItem.event.id == newItem.event.id
-
-                oldItem is MatchEventItem.Header && newItem is MatchEventItem.Header ->
-                    oldItem.tournament.id == newItem.tournament.id
-
-                oldItem is MatchEventItem.Divider && newItem is MatchEventItem.Divider ->
-                    true
-
-                oldItem is MatchEventItem.RoundHeader && newItem is MatchEventItem.RoundHeader ->
-                    oldItem.round == newItem.round
-
-                else -> false
-            }
-        }
-
-        override fun areContentsTheSame(oldItem: MatchEventItem, newItem: MatchEventItem): Boolean {
-            return oldItem == newItem
-        }
     }
 }
